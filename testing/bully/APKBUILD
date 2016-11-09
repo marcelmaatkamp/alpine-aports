@@ -1,0 +1,36 @@
+# Contributor: Daniel Guerra <daniel.guerra69@gmail.com>
+# Maintainer:
+pkgname=bully
+pkgver=1.0
+pkgrel=22
+pkgdesc="bully"
+url="bully"
+arch="all"
+license="GNU"
+depends="libpcap-dev libssl1.0 openssl"
+depends_dev="binutils g++ linux-headers"
+makedepends="$depends_dev"
+install="/tmp/aports/testing/bully/bully"
+subpackages="$pkgname-dev $pkgname-doc"
+source="/tmp/aports/testing/bully/bully"
+builddir="/tmp/aports/testing/bully/bully"
+
+prepare() {
+	cd "$builddir"
+        git clone https://github.com/HorayNarea/bully.git
+        cd bully
+}
+
+build() {
+	cd "$builddir/bully"
+	make || return 1
+}
+
+package() {
+	cd "$builddir"
+	make -j1 DESTDIR="$pkgdir" install || return 1
+}
+
+md5sums=""
+sha256sums=""
+sha512sums=""
